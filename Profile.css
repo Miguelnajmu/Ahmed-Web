@@ -1,0 +1,78 @@
+/* Bungkus form */
+.contact-wrapper {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  color: #fff;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Judul */
+.contact-wrapper h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #60a5fa;
+}
+
+/* Setiap grup input */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+/* Label input */
+.form-group label {
+  margin-bottom: 6px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #93c5fd;
+}
+
+/* Input dan textarea */
+.form-group input,
+.form-group textarea {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  font-size: 1rem;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  background: rgba(255,255,255,0.15);
+  box-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
+}
+
+/* Tombol submit */
+.btn-submit {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.btn-submit:hover {
+  transform: scale(1.03);
+  background: linear-gradient(90deg, #1d4ed8, #3b82f6);
+}
+
+/* Animasi */
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(20px);}
+  to {opacity: 1; transform: translateY(0);}
+}

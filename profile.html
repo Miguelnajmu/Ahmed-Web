@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <!-- =========================================
+       META & PAGE BASICS
+       ========================================= -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Profil — Ahmed Muzzaki El Nazmu</title>
+  <meta name="description" content="Profil Ahmed Muzzaki El Nazmu — teknisi laptop, web developer, electronics & Arduino enthusiast." />
+
+  <!-- =========================================
+       FONTS (opsional, fallback ke system UI)
+       ========================================= -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =========================================
+       RESET & THEME TOKENS
+       ========================================= */
+    :root{
+      /* // Warna utama biru → oranye biar kontras elegan */
+      --c-bg: #0b1220;                /* latar utama gelap */
+      --c-surface: #0f172a;           /* kartu/permukaan */
+      --c-text: #e5e7eb;              /* text utama */
+      --c-muted: #94a3b8;             /* text sekunder */
+      --c-primary: #60a5fa;           /* aksen biru */
+      --c-secondary: #f97316;         /* aksen oranye */
+      --c-ring: rgba(96,165,250,.22); /* ring focus */
+      --radius-lg: 20px;              /* radius besar */
+      --radius-md: 14px;              /* radius sedang */
+      --radius-pill: 999px;           /* pill */
+      --shadow-1: 0 10px 28px rgba(0,0,0,.35);
+      --shadow-2: 0 16px 46px rgba(0,0,0,.5);
+      --shadow-soft: 0 8px 22px rgba(0,0,0,.28);
+      --nav-h: 70px;                  /* tinggi navbar */
+      --container: 1200px;            /* max lebar */
+    }
+
+    *{ box-sizing: border-box; margin: 0; padding: 0; }
+    html{ scroll-behavior: smooth; }
+    body{
+      font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif;
+      color: var(--c-text);
+      background: var(--c-bg);
+      min-height: 100dvh;
+      line-height: 1.55;
+      /* // fallback warna di bawah gradient animasi */
+      background-color: #0a1223;
+    }
+
+    /* =========================================
+       ANIMATED GRADIENT BACKDROP + SVG PATTERN
+       - layer 1: gradient animasi
+       - layer 2: pola SVG tipis biar bertekstur
+       ========================================= */
+    .backdrop{
+      position: fixed;
+      inset: 0;
+      z-index: -2; /* // di belakang semua konten */
+      background:
+        radial-gradient(60vw 60vh at 15% 20%, rgba(96,165,250,.18), transparent 60%),
+        radial-gradient(55vw 55vh at 85% 70%, rgba(249,115,22,.16), transparent 65%),
+        linear-gradient(120deg, #0b132b 0%, #0e1b3c 50%, #0b132b 100%);
+      overflow: hidden;
+    }
+    /* // lapisan animasi gradient tambahan */
+    .backdrop::before{
+      content:"";
+      position:absolute; inset:-10%;
+      background: conic-gradient(from 0deg, rgba(96,165,250,.22), rgba(249,115,22,.18), rgba(2,6,23,0.12), rgba(96,165,250,.22));
+      filter: blur(80px) saturate(130%);
+      animation: swirl 28s linear infinite;
+      opacity: .55;
+    }
+    /* // pola tipis menggunakan SVG grid + lingkaran, agar tidak mengganggu teks */
+    .backdrop::after{
+      content:"";
+      position:absolute; inset:0;
+      opacity:.24; pointer-events:none;
+      background-image: url("data:image/svg+xml,%3Csvg width='240' height='240' viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.14' stroke-width='1'%3E%3Cpath d='M0 120h240M120 0v240'/%3E%3Ccircle cx='120' cy='120' r='42' stroke-opacity='.12'/%3E%3Cpath d='M30 30l40 40M210 30l-40 40M30 210l40-40M210 210l-40-40' stroke-opacity='.1'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: 360px 360px;
+      background-position: center;
+      mix-blend-mode: screen;
+    }
+
+    @keyframes swirl{
+      0%{ transform: rotate(0deg) scale(1.1); }
+      50%{ transform: rotate(180deg) scale(1.12); }
+      100%{ transform: rotate(360deg) scale(1.1); }
+    }
+
+    /* =========================================
+       NAVBAR SIMPLE (rounded & glowing)
+       ========================================= */
+    .topbar{
+      position: sticky; top: 0; z-index: 40;
+      height: var(--nav-h);
+      display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(8px);
+      background: linear-gradient(180deg, rgba(2,6,23,.72), rgba(2,6,23,.45));
+      border-bottom: 2px solid rgba(96,165,250,.45);
+      border-bottom-left-radius: 16px;
+      border-bottom-right-radius: 16px;
+      box-shadow: inset 0 -1px 0 rgba(255,255,255,.04), 0 10px 30px rgba(0,0,0,.25);
+    }
+    .nav-wrap{
+      max-width: var(--container);
+      width: 100%;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 18px;
+      gap: 12px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--c-text);
+      font-weight:800; letter-spacing:.4px;
+    }
+    .brand .avatar{
+      /* // logo/ikon profil kecil di navbar */
+      width: 36px; height: 36px; border-radius: 50%;
+      object-fit: cover; border: 2px solid rgba(249,115,22,.8);
+      box-shadow: 0 0 0 3px rgba(249,115,22,.15), 0 6px 18px rgba(249,115,22,.24);
+    }
+    .nav-links{
+      display:flex; align-items:center; gap:8px;
+    }
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 10px 14px; border-radius: var(--radius-pill);
+      text-decoration:none; color: var(--c-text); font-weight:700; font-size:.95rem;
+      background: rgba(30,41,59,.6);
+      border: 1px solid rgba(148,163,184,.28);
+      transition: transform .18s ease, background .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+    .chip:hover{
+      transform: translateY(-1px);
+      background: rgba(30,41,59,.78);
+      border-color: rgba(96,165,250,.45);
+      box-shadow: 0 10px 26px rgba(37,99,235,.28);
+    }
+
+    /* =========================================
+       PAGE WRAPPER / CONTAINER
+       ========================================= */
+    .wrap{
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 28px 18px 80px; /* // padding khusus sesuai request */
+    }
+
+    /* =========================================
+       HERO SECTION (judul + subjudul)
+       ========================================= */
+    .hero{
+      display:grid; grid-template-columns: 1.1fr .9fr; gap: 28px;
+      align-items: center; min-height: calc(60vh - var(--nav-h));
+      padding-top: 18px;
+    }
+    @media (max-width: 900px){
+      .hero{ grid-template-columns: 1fr; }
+    }
+    .hero-left{
+      /* // judul besar terpisah dari intro card */
+      padding: 20px;
+    }
+    .title{
+      font-size: clamp(2rem, 6vw, 3.4rem); line-height: 1.06;
+      font-weight: 900;
+      background: linear-gradient(90deg, var(--c-primary), var(--c-secondary));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      letter-spacing: .5px;
+      text-shadow: 0 8px 22px rgba(96,165,250,.18);
+    }
+    .subtitle{
+      color: var(--c-muted);
+      margin-top: 10px;
+      max-width: 680px;
+    }
+
+    /* =========================================
+       PROFILE CARD (foto + biodata singkat)
+       ========================================= */
+    .profile-card{
+      background: rgba(15,23,42,.76);
+      border: 1px solid rgba(148,163,184,.25);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow-2);
+      backdrop-filter: blur(10px);
+      transform: translateY(14px);
+      opacity: 0; /* // akan diset visible via JS */
+      transition: transform .8s cubic-bezier(.2,.65,.2,1), opacity .8s ease;
+    }
+    .profile-card.visible{
+      transform: translateY(0); opacity: 1;
+    }
+    .profile-header{
+      display:flex; align-items:center; gap: 16px;
+    }
+    .profile-avatar{
+      width: 92px; height: 92px; border-radius: 50%;
+      object-fit: cover; border: 3px solid var(--c-secondary);
+      box-shadow: 0 8px 24px rgba(249,115,22,.35);
+    }
+    .profile-name{
+      font-size: 1.4rem; font-weight: 800; letter-spacing: .2px;
+    }
+    .profile-meta{
+      color: var(--c-muted); font-size: .98rem;
+    }
+    .profile-body{
+      margin-top: 14px; color:#cbd5e1;
+    }
+    .tag-row{
+      margin-top: 14px; display:flex; gap: 8px; flex-wrap: wrap;
+    }
+    .tag{
+      font-size: .84rem; color:#fff; font-weight:700;
+      background: linear-gradient(45deg, rgba(96,165,250,.25), rgba(249,115,22,.25));
+      border: 1px solid rgba(148,163,184,.28);
+      padding: 6px 10px; border-radius: var(--radius-pill);
+    }
+
+    /* =========================================
+       SECTION TITLES
+       ========================================= */
+    .section{
+      margin-top: 50px;
+    }
+    .section-title{
+      text-align:center; font-size: 1.8rem; font-weight: 800;
+      margin-bottom: 12px; letter-spacing:.2px; color:#e2e8f0;
+    }
+    .section-sub{
+      text-align:center; color: var(--c-muted); margin-bottom: 22px;
+      max-width: 820px; margin-inline: auto;
+    }
+
+    /* =========================================
+       ABOUT SECTION (grid 2 kolom)
+       ========================================= */
+    .about-grid{
+      display:grid; grid-template-columns: 1.1fr .9fr; gap: 22px;
+      align-items: start;
+    }
+    @media (max-width: 900px){
+      .about-grid{ grid-template-columns: 1fr; }
+    }
+    .box{
+      background: rgba(15,23,42,.78);
+      border: 1px solid rgba(148,163,184,.22);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: var(--shadow-soft);
+      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    }
+    .box:hover{
+      transform: translateY(-3px);
+      border-color: rgba(96,165,250,.4);
+      box-shadow: 0 14px 34px rgba(0,0,0,.42);
+    }
+    .about-text p + p{ margin-top: 10px; }
+
+    /* // list biodata */
+    .bio-list{
+      list-style:none; display:grid; gap: 10px;
+    }
+    .bio-item{
+      display:flex; align-items:center; gap:10px;
+      padding: 10px 12px;
+      background: rgba(30,41,59,.6);
+      border: 1px solid rgba(148,163,184,.22);
+      border-radius: 12px;
+    }
+    .bio-item strong{ min-width: 140px; color:#93c5fd; }
+
+    /* =========================================
+       WHY ME (poin “Kenapa saya menarik…”)
+       ========================================= */
+    .why-grid{
+      display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+    .why-card{
+      background: #0b1222;
+      border: 1px solid rgba(148,163,184,.2);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: var(--shadow-1);
+      position:relative;
+      overflow: hidden;
+    }
+    .why-card::after{
+      /* // aksen glow halus di atas kartu */
+      content:""; position:absolute; inset:-20%; z-index:-1;
+      background: radial-gradient(220px 120px at 15% 10%, rgba(96,165,250,.18), transparent 60%),
+                  radial-gradient(220px 120px at 85% 90%, rgba(249,115,22,.16), transparent 60%);
+      filter: blur(20px);
+    }
+    .why-title{
+      font-size: 1.05rem; font-weight: 800; color:#93c5fd; margin-bottom: 6px;
+    }
+    .why-text{ color:#cbd5e1; }
+
+    /* =========================================
+       SKILLS BUBBLES (gimmick)
+       ========================================= */
+    .bubble-row{
+      margin-top: 10px; display:flex; flex-wrap:wrap; gap: 8px;
+    }
+    .bubble{
+      font-size: .82rem; font-weight:700; color:#fff;
+      background: linear-gradient(45deg, rgba(96,165,250,.24), rgba(249,115,22,.24));
+      border: 1px solid rgba(148,163,184,.26);
+      padding: 8px 12px; border-radius: 999px;
+      transition: transform .25s ease;
+    }
+    .bubble:hover{ transform: translateY(-2px) scale(1.03); }
+
+    /* =========================================
+       GALLERY (gimmick images)
+       ========================================= */
+    .gallery-grid{
+      display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 14px;
+    }
+    .gal{
+      position: relative; border-radius: 16px; overflow: hidden;
+      border: 1px solid rgba(148,163,184,.2);
+      box-shadow: var(--shadow-1);
+      transform: translateY(12px); opacity: 0; transition: transform .8s ease, opacity .8s ease;
+    }
+    .gal.visible{ transform: translateY(0); opacity: 1; }
+    .gal img{ width: 100%; height: 200px; object-fit: cover; display:block; transition: transform .6s ease; }
+    .gal:hover img{ transform: scale(1.06); }
+    .gal .cap{
+      position:absolute; inset:auto 10px 10px 10px;
+      background: rgba(2,6,23,.7); border: 1px solid rgba(148,163,184,.24);
+      padding: 8px 12px; border-radius: 12px; color:#e5e7eb; font-size:.92rem;
+      backdrop-filter: blur(6px);
+    }
+
+    /* =========================================
+       CONTACT (form sederhana)
+       ========================================= */
+    .contact{
+      display:grid; grid-template-columns: 1.1fr .9fr; gap: 22px; align-items: start;
+    }
+    @media (max-width: 900px){ .contact{ grid-template-columns: 1fr; } }
+    .form{
+      display:grid; gap: 12px;
+    }
+    input, textarea{
+      background: #0b1222; border: 1px solid rgba(148,163,184,.28); color: var(--c-text);
+      padding: 12px 14px; border-radius: 12px; font-size: 1rem; outline: none;
+      transition: border-color .25s ease, box-shadow .25s ease;
+    }
+    input:focus, textarea:focus{ border-color: var(--c-primary); box-shadow: 0 0 0 4px var(--c-ring); }
+    button{
+      background: linear-gradient(45deg, var(--c-primary), var(--c-secondary));
+      border: none; color:#fff; padding: 12px 16px; border-radius: 14px; font-weight:800; cursor:pointer;
+      box-shadow: 0 10px 26px rgba(249,115,22,.25), 0 8px 20px rgba(37,99,235,.25);
+      transition: transform .18s ease, box-shadow .25s ease;
+    }
+    button:hover{ transform: translateY(-1px); box-shadow: 0 14px 32px rgba(249,115,22,.35), 0 10px 26px rgba(37,99,235,.35); }
+
+    /* =========================================
+       FLOATING GIMMICK ICONS (dekorasi animasi)
+       ========================================= */
+    .floaters{
+      position: fixed; inset: 0; pointer-events:none; z-index:-1;
+    }
+    .floater{
+      position:absolute; width: 64px; height: 64px; opacity:.35; filter: drop-shadow(0 10px 20px rgba(0,0,0,.4));
+      transition: transform .2s ease;
+    }
+    .floater img{ width:100%; height:100%; object-fit: contain; }
+
+    /* =========================================
+       FOOTER
+       ========================================= */
+    footer{
+      margin-top: 60px; color:#94a3b8; text-align:center; padding: 26px 12px 40px;
+    }
+
+    /* =========================================
+       REVEAL UTILS
+       ========================================= */
+    .reveal{ opacity: 0; transform: translateY(16px) scale(.98); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible{ opacity: 1; transform: translateY(0) scale(1); }
+  </style>
+</head>
+<body>
+  <!-- =========================================
+       BACKDROP LAYER (gradient + pattern)
+       ========================================= -->
+  <div class="backdrop" aria-hidden="true"></div>
+
+  <!-- =========================================
+       FLOATING DECORATIVE ICONS (gimmick)
+       // src gambar pakai link bebas-royalti (unsplash/icon repo)
+       ========================================= -->
+  <div class="floaters">
+    <!-- // floater laptop -->
+    <div class="floater" id="f1" style="top:10%; left:4%;">
+      <img alt="floater-laptop"
+           src="https://cdn-icons-png.flaticon.com/512/2920/2920404.png" />
+    </div>
+    <!-- // floater chip -->
+    <div class="floater" id="f2" style="top:72%; left:10%;">
+      <img alt="floater-chip"
+           src="https://cdn-icons-png.flaticon.com/512/4248/4248443.png" />
+    </div>
+    <!-- // floater gear -->
+    <div class="floater" id="f3" style="top:18%; right:8%;">
+      <img alt="floater-gear"
+           src="https://cdn-icons-png.flaticon.com/512/3524/3524636.png" />
+    </div>
+    <!-- // floater code -->
+    <div class="floater" id="f4" style="bottom:12%; right:12%;">
+      <img alt="floater-code"
+           src="https://cdn-icons-png.flaticon.com/512/753/753244.png" />
+    </div>
+  </div>
+
+  <!-- =========================================
+       NAVBAR
+       ========================================= -->
+  <header class="topbar">
+    <div class="nav-wrap">
+      <a class="brand" href="index.html" title="Kembali ke landing">
+        <!-- // avatar kecil -->
+        <img class="avatar"
+             src="rilhbtn.jpg"
+             alt="Avatar Home Button.png" />
+        <span>Landing Page</span>
+      </a>
+
+      <nav class="nav-links">
+       
+    
+        <!-- // smooth scroll internal section -->
+        <a class="chip" href="#about">About</a> 
+        <a class="chip" href="#why">Why Me</a>
+        <a class="chip" href="#gallery">Gallery</a>
+        <a class="chip" href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- =========================================
+       PAGE CONTENT
+       ========================================= -->
+  <main class="wrap">
+    <!-- ========== HERO ==========
+         - judul besar terpisah dari intro card (sesuai request)
+         - efek typewriter pada sub tagline
+         ========================== -->
+    <section class="hero">
+      <div class="hero-left">
+        <h1 class="title">PROFILE AHMED MUZZAKI EL NAZMU</h1>
+        <p class="subtitle">
+          <span id="typeTarget">Teknisi Laptop • Web Developer • Electronics & Arduino Enthusiast</span>
+        </p>
+      </div>
+
+      <!-- // kartu profil singkat -->
+      <aside class="profile-card reveal" id="profileCard">
+        <div class="profile-meta">
+          <img class="profile-avatar"
+               src="pfp.jpeg"
+               alt="Foto Profil Ahmed" />
+          <div>
+            <div class="profile-name">Ahmed Muzzaki El Nazmu</div>
+            <div class="profile-meta">Male • Currently Education: SMK CIBITUNG 1</div>
+            <div class="tag-row">
+              <span class="tag">Servis Laptop</span>
+              <span class="tag">Web Development</span>
+              <span class="tag">Problem Solving PC</span>
+              <span class="tag">Database</span>
+              <span class="tag">Electronics</span>
+              <span class="tag">Arduino</span>
+            </div>
+          </div>
+        </div>
+        <div class="profile-body">
+          <!-- // intro lebih panjang, dipisah dari judul besar -->
+          Saya menggabungkan ketelitian teknisi dengan kerapian developer.
+          Mulai dari perbaikan hardware & software, bangun website modern, sampai prototyping
+          elektronik dan otomasi berbasis Arduino. Tujuan saya sederhana:
+          <em>membuat solusi yang tahan pakai, rapi, dan menyenangkan saat digunakan</em>.
+        </div>
+      </aside>
+    </section>
+
+   
+<style>.contact-wrapper {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  color: #fff;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Judul */
+.contact-wrapper h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #60a5fa;
+}
+
+/* Setiap grup input */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+/* Label input */
+.form-group label {
+  margin-bottom: 6px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #93c5fd;
+}
+
+/* Input dan textarea */
+.form-group input,
+.form-group textarea {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  font-size: 1rem;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  background: rgba(255,255,255,0.15);
+  box-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
+}
+
+/* Tombol submit */
+.btn-submit {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.btn-submit:hover {
+  transform: scale(1.03);
+  background: linear-gradient(90deg, #1d4ed8, #3b82f6);
+}
+
+/* Animasi */
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+</style>
+
+    <!-- ========== ABOUT ==========
+         - dua kolom: narasi + biodata ringkas
+         ============================ -->
+    <section id="about" class="section">
+      <h2 class="section-title reveal">Tentang Saya</h2>
+      <p class="section-sub reveal">
+        Pendekatan kerja saya: <strong>terukur</strong>, <strong>transparan</strong>, dan <strong>berorientasi hasil</strong>.
+        Saya percaya kerja berkualitas lahir dari rencana yang matang, komunikasi yang jujur, dan eksekusi yang konsisten.
+      </p>
+
+      <div class="about-grid">
+        <div class="box about-text reveal">
+          <p>
+            Saya memulai dari ketertarikan membongkar perangkat—bukan sekadar ingin tau,
+            tapi ingin mengerti <em>kenapa</em> sesuatu bekerja. Dari situ, minat saya berkembang ke
+            pemrograman, desain sistem, sampai integrasi perangkat dengan IoT.
+          </p>
+          <p>
+            Dalam proyek web, saya mengutamakan <strong>aksesibilitas</strong>, <strong>kinerja</strong>, dan <strong>keamanan</strong>.
+            Di ranah hardware, saya fokus pada <strong>diagnosa akurat</strong> & <strong>penanganan yang rapi</strong>.
+          </p>
+          <div class="bubble-row">
+            <span class="bubble">HTML/CSS/JS</span>
+            <span class="bubble">Node/Express</span>
+            <span class="bubble">MySQL/SQLite</span>
+            <span class="bubble">UI/UX Basics</span>
+            <span class="bubble">Soldering & Rework</span>
+            <span class="bubble">Sensors & Modules</span>
+          </div>
+        </div>
+
+        <div class="box reveal">
+          <ul class="bio-list">
+            <li class="bio-item"><strong>Nama</strong> Ahmed Muzzaki El Nazmu</li>
+            <li class="bio-item"><strong>Gender</strong> Male</li>
+            <li class="bio-item"><strong>Pendidikan</strong> SMK CIBITUNG 1 (Currently)</li>
+            <li class="bio-item"><strong>Domisili</strong> Bekasi Area (Flexible Remote)</li>
+            <li class="bio-item"><strong>Fokus</strong> Servis Laptop, Web Dev, Electronics, Arduino</li>
+            <li class="bio-item"><strong>Bahasa</strong> Indonesia (Native), English (Working), German(</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== WHY ME ==========
+         - “Kenapa saya menarik untuk bekerja sama dengan Anda?”
+         - grid cards dengan poin-poin
+         ============================ -->
+    <section id="why" class="section">
+      <h2 class="section-title reveal">Kenapa Saya Menarik untuk Bekerja Sama dengan Anda?</h2>
+      <p class="section-sub reveal">Singkatnya: saya bertujuan bikin hidup Anda lebih mudah—bukan lebih rumit.</p>
+
+      <div class="why-grid">
+        <article class="why-card reveal">
+          <div class="why-title">Berorientasi Solusi</div>
+          <p class="why-text">Saya fokus pada akar masalah dan menyodorkan opsi yang realistis: jangka cepat, menengah, dan panjang—beserta konsekuensi biayanya.</p>
+        </article>
+        <article class="why-card reveal">
+          <div class="why-title">Komunikasi Jelas</div>
+          <p class="why-text">Tidak ada istilah yang bikin bingung. Progress dilaporkan teratur, keputusan dicatat, revisi tercatat rapi.</p>
+        </article>
+        <article class="why-card reveal">
+          <div class="why-title">Adaptif & Cepat Belajar</div>
+          <p class="why-text">Tool baru? Framework beda? Spesifikasi berubah? Saya mudah menyesuaikan tanpa mengorbankan kualitas inti.</p>
+        </article>
+        <article class="why-card reveal">
+          <div class="why-title">Rapi & Tahan Pakai</div>
+          <p class="why-text">Baik kabel maupun kode, semuanya harus rapi. Hasilnya: mudah dirawat, minim drama, dan konsisten performanya.</p>
+        </article>
+        <article class="why-card reveal">
+          <div class="why-title">Profesional & Amanah</div>
+          <p class="why-text">Waktu, biaya, dan data Anda saya jaga serius. Kalau ada risiko, saya sampaikan apa adanya.</p>
+        </article>
+        <article class="why-card reveal">
+          <div class="why-title">Dokumentasi Singkat Jelas</div>
+          <p class="why-text">Setiap pekerjaan saya sertai catatan ringkas: apa yang dikerjakan, kenapa, dan bagaimana prosesnya.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ========== GALLERY ==========
+         - gambar-gambar gimmick (ilustrasi teknis & setup)
+         - semua pakai link external (unsplash) biar gampang diganti
+         ============================ -->
+    <section id="gallery" class="section">
+      <h2 class="section-title reveal">Gallery</h2>
+      <p class="section-sub reveal">Sekilas visual yang mewakili ketertarikan saya pada teknologi, perangkat, dan antarmuka.</p>
+
+      <div class="gallery-grid">
+        <!-- // tiap item diberi caption di pojok bawah -->
+        <figure class="gal">
+          <img src="Crct.jpg" alt="Circuit Board" />
+          <figcaption class="cap">Circuit & PCB</figcaption>
+        </figure>
+        <figure class="gal">
+          <img src="Serpis.jpg" alt="Laptop Repair" />
+          <figcaption class="cap">Laptop Service</figcaption>
+        </figure>
+        <figure class="gal">
+          <img src="ardino.jpg" alt="Arduino Prototyping" />
+          <figcaption class="cap">Arduino Prototyping</figcaption>
+        </figure>
+        <figure class="gal">
+          <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" alt="Web Development" />
+          <figcaption class="cap">Web Development</figcaption>
+        </figure>
+        <figure class="gal">
+          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop" alt="Microcontroller" />
+          <figcaption class="cap">Microcontroller</figcaption>
+        </figure>
+        <figure class="gal">
+          <img src="dtbse.jpg" alt="Data & Dashboard" />
+          <figcaption class="cap">Data & Dashboard</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ========== CONTACT ==========
+         - form sederhana + info sosial (ikon SVG inline)
+         ============================ -->
+    <section id="contact" class="section">
+      <h2 class="section-title reveal">Hubungi Saya</h2>
+      <p class="section-sub reveal">Punya pertanyaan atau mau mulai proyek? Kirim pesan singkat aja—saya akan balas secepatnya.</p>
+
+     <!-- Form Contact -->
+<div class="contact-wrapper">
+  <h2>Hubungi Saya</h2>
+  <form id="contactForm">
+    <div class="form-group">
+      <label for="nama">Nama</label>
+      <input type="text" id="nama" name="nama" placeholder="Masukkan nama lengkap" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Masukkan email" required>
+    </div>
+
+    <div class="form-group">
+      <label for="pesan">Pesan</label>
+      <textarea id="pesan" name="pesan" placeholder="Tulis pesan kamu..." rows="5" required></textarea>
+    </div>
+
+    <button type="submit" class="btn-submit">Kirim Pesan</button>
+  </form>
+</div>
+
+<script>
+document.getElementById("contactForm").addEventListener("submit", async function(e) {
+    e.preventDefault(); // Biar ga reload
+    let formData = new FormData(this);
+
+    let response = await fetch("kirim_pesan.php", {
+        method: "POST",
+        body: formData
+    });
+
+    let result = await response.text();
+    alert(result);
+    this.reset();
+});
+</script>
+
+
+        <div class="box reveal" style="display:grid; gap:12px;">
+          <div style="font-weight:800; color:#93c5fd;">Sosial</div>
+
+          <a class="chip" href="https://www.instagram.com/elnazzmu/" target="_blank" rel="noopener">
+            <!-- // icon Instagram (inline SVG) -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="margin-right:6px;">
+              <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Z" stroke="currentColor"/>
+              <rect x="7" y="7" width="10" height="10" rx="5" stroke="currentColor"/>
+              <circle cx="18" cy="6" r="1.2" fill="currentColor"/>
+            </svg>
+            Instagram @elnazzmu
+          </a>
+
+          <a class="chip" href="https://wa.me/62895338681724" target="_blank" rel="noopener">
+            <!-- // icon WhatsApp (inline SVG) -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="margin-right:6px;">
+              <path d="M20.5 11.8A8.5 8.5 0 1 1 12 3.3a8.5 8.5 0 0 1 8.5 8.5Z" stroke="currentColor"/>
+              <path d="M6.5 19.5l1.1-3.3a7 7 0 1 0-2.8-2.7l-3.3 1.1 5 4.9Z" stroke="currentColor"/>
+              <path d="M9.6 8.8c-.2-.5-.5-.5-.8-.5h-.7c-.2 0-.5 0-.7.3s-1 1-1 2.4 1 2.8 1.1 3c.1.2 2.1 3.3 5.1 4.5 2.5 1 3 1 3.5 1s1.7-.6 1.9-1.3c.2-.6.2-1.2.2-1.3 0-.1-.1-.3-.3-.4l-1.2-.6c-.2-.1-.3-.2-.5.1-.2.3-.6 1-.7 1.1-.2.1-.3.2-.5.1-.2-.1-.8-.3-1.6-.9a7.1 7.1 0 0 1-2.6-3.2c-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.2-.1.3-.3.4-.5.1-.2 0-.4 0-.5s-.5-1.3-.7-1.8Z" fill="currentColor"/>
+            </svg>
+            WhatsApp +62 895-3386-81724
+          </a>
+
+          <div class="bubble-row">
+            <span class="bubble">Respons Cepat</span>
+            <span class="bubble">Harga Fair</span>
+            <span class="bubble">Garansi Pekerjaan</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================
+       FOOTER
+       ========================================= -->
+  <footer>
+    © 2025 Ahmed. All Rights Reserved.
+  </footer>
+
+  <!-- =========================================
+       SCRIPTS (Animasi + Interaksi)
+       - typewriter subtitle
+       - reveal on scroll (IntersectionObserver)
+       - smooth scroll kompensasi navbar
+       - floating gimmicks (bergerak halus)
+       - parallax mikro pada mousemove
+       ========================================= -->
+  <script>
+    /* ============================================================
+       TYPEWRITER EFFECT untuk subtitle hero
+       - menuliskan teks satu per satu, lalu idle
+       ============================================================ */
+    (function(){
+      const el = document.getElementById('typeTarget');
+      const full = 'Teknisi Laptop • Web Developer • Electronics & Arduino Enthusiast';
+      const speed = 24; // ms per karakter
+      el.textContent = ''; // kosongkan dulu
+
+      let i = 0;
+      const tick = () => {
+        if (i < full.length){
+          el.textContent += full[i++];
+          setTimeout(tick, speed);
+        } else {
+          // // blink caret halus biar ada “nyawa”
+          el.insertAdjacentHTML('beforeend','<span id="caret">|</span>');
+          const c = document.getElementById('caret');
+          let vis = true;
+          setInterval(()=>{ c.style.opacity = (vis=!vis) ? '1' : '0'; }, 500);
+        }
+      };
+      setTimeout(tick, 400); // jeda kecil agar terasa organik
+    })();
+
+    /* ============================================================
+       REVEAL ON SCROLL
+       - semua elemen .reveal & .gal akan fade-in
+       ============================================================ */
+    (function(){
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: .14 });
+
+      document.querySelectorAll('.reveal, .gal').forEach(el => io.observe(el));
+      // profile-card kadang belum ter-observe karena di hero; observe manual juga
+      const pc = document.getElementById('profileCard');
+      if (pc) io.observe(pc);
+    })();
+
+    /* ============================================================
+       SMOOTH SCROLL dgn kompensasi tinggi navbar
+       ============================================================ */
+    (function(){
+      const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 70;
+      const links = document.querySelectorAll('a.chip[href^="#"]');
+      const goto = (hash)=>{
+        const el = document.querySelector(hash);
+        if (!el) return;
+        const y = el.getBoundingClientRect().top + window.pageYOffset - (navH - 6);
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      };
+      links.forEach(a=>{
+        a.addEventListener('click', (e)=>{
+          const href = a.getAttribute('href');
+          if (href && href.startsWith('#')){ e.preventDefault(); goto(href); }
+        });
+      });
+    })();
+
+    /* ============================================================
+       FLOATING GIMMICKS (ikon melayang)
+       - setiap floater bergerak naik-turun sedikit
+       - tambah parallax kecil saat mouse bergerak
+       ============================================================ */
+    (function(){
+      const floaters = [...document.querySelectorAll('.floater')];
+      const base = floaters.map((el)=>({
+        el,
+        top: el.offsetTop,
+        left: el.offsetLeft,
+        amp: 12 + Math.random()*10,   // amplitudo vertikal
+        spd: 3000 + Math.random()*2000 // kecepatan (ms)
+      }));
+
+      // animasi naik-turun halus
+      base.forEach(({el, amp, spd})=>{
+        let t0 = performance.now();
+        const loop = (t)=>{
+          const dt = t - t0;
+          const y = Math.sin(dt / spd * Math.PI * 2) * amp;
+          el.style.transform = `translateY(${y}px)`;
+          requestAnimationFrame(loop);
+        };
+        requestAnimationFrame(loop);
+      });
+
+      // parallax mikro mengikuti mouse (tanpa bikin pusing)
+      window.addEventListener('mousemove', (e)=>{
+        const { innerWidth: w, innerHeight: h } = window;
+        const dx = (e.clientX / w - .5) * 8;
+        const dy = (e.clientY / h - .5) * 8;
+        floaters.forEach((el, i)=>{
+          el.style.transform += ` translate(${dx*(i%2?1:-1)}px, ${dy*(i%2?-1:1)}px)`;
+        });
+      }, { passive: true });
+    })();
+
+    /* ============================================================
+       PARALLAX MICRO untuk intro card saat scroll
+       - halus dan tidak shaky
+       ============================================================ */
+    (function(){
+      const intro = document.getElementById('profileCard');
+      if (!intro) return;
+      window.addEventListener('scroll', ()=>{
+        const sc = Math.min(1, window.scrollY / 300);
+        intro.style.transform = `translateY(${(-8 * sc)}px)`;
+        intro.style.opacity = String(1 - sc * 0.04);
+      }, { passive: true });
+    })();
+  </script>
+</body>
+</html>
+
+<!-- Teks asisten -->
+<div id="assistantText" style="font-size:1.2rem; margin-top:20px; color:#f1f5f9;"></div>
+
+<!-- Audio untuk suara asisten -->
+<audio id="assistantVoice" src="assistant.mp3"></audio>
+
+<script>
+const text = "I am Ahmed's assistant, here to help you find whatever you need.";
+let i = 0;
+const speed = 50; // kecepatan ketik (ms)
+
+function typeEffect() {
+    if (i < text.length) {
+        document.getElementById("assistantText").textContent += text.charAt(i);
+        i++;
+        setTimeout(typeEffect, speed);
+    }
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+    // Play audio pas user interaksi (biar lolos aturan autoplay)
+    document.body.addEventListener("click", () => {
+        document.getElementById("assistantVoice").play();
+    }, { once: true });
+
+    typeEffect();
+});
+</script>

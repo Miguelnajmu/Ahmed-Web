@@ -1,0 +1,225 @@
+<!-- FILE: index.html
+     Landing utama — simpan sebagai index.html
+     Pastikan style.css dan script.js ada di folder sama, serta click-6.mp3 tersedia.
+-->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>WELCOME TO AHMED WEBSITE</title>
+
+  <!-- Link ke stylesheet eksternal -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Meta & SEO sederhana -->
+  <meta name="description" content="Portfolio Ahmed — teknisi laptop, web developer, electronics & Arduino. Interaktif, modern, dan responsif.">
+</head>
+<body>
+  <!--
+    NAVBAR (sederhana). Tombol profile dihilangkan dari navbar karena user minta pindah
+    tombol About Me di bawah hero title. Navbar tetap ada untuk navigasi.
+  -->
+  <nav class="topbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="Kembali ke atas">
+        <span class="brand-logo" aria-hidden="true">A</span>
+        <span class="brand-name">Ahmed</span>
+      </a>
+
+      <div class="nav-links" role="menubar" aria-label="Menu">
+        <a class="nav-link" href="#skills">Skills</a>
+        <a class="nav-link" href="#gallery">Gallery</a>
+        
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header id="top" class="hero" role="banner" aria-labelledby="hero-title">
+    <div class="hero-inner">
+      <!-- Judul besar -->
+      <h1 id="hero-title" class="hero-title">WELCOME TO AHMED WEBSITE</h1>
+
+      <!-- Subtitle / Typewriter style (JS will create effect) -->
+      <p class="hero-sub" id="hero-sub">Teknisi Laptop • Web Developer • Electronics & Arduino Enthusiast</p>
+
+      <!-- About Me button (centered under title) -->
+      <div class="about-wrap" aria-hidden="false">
+  <!-- Anchor styled as button -->
+  <a id="aboutBtn" class="about-btn" href="profile.html" role="button" aria-label="About Me — buka halaman profil">
+    <svg class="about-ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4 0-8 2-8 4v2h16v-2c0-2-4-4-8-4z"/>
+    </svg>
+    <span>About Me</span>
+  </a>
+</div>
+
+<script>
+// Siapkan audio
+const clickSound = new Audio('click-6.mp3');
+
+// Ambil tombol
+const aboutBtn = document.getElementById('aboutBtn');
+
+// Play sound sebelum pindah halaman
+aboutBtn.addEventListener('click', function(e) {
+    e.preventDefault(); // Cegah pindah langsung
+
+    clickSound.currentTime = 0; // Mulai dari awal
+    clickSound.play();
+
+    // Delay biar sound kedengeran dulu, baru pindah
+    setTimeout(() => {
+        window.location.href = aboutBtn.href;
+    }, 200); // Delay 0.2 detik
+});
+</script>
+
+
+      <!-- small hint -->
+      <p class="scroll-hint">Scroll down to see skills & interactive logos ↓</p>
+    </div>
+  </header>
+
+  <!-- SKILLS / LOGOS SECTION
+       Each .logo-card has data-title and data-desc attributes which script.js will read.
+       The logos are intentionally using external URLs (SVG/PNG). If some don't load,
+       replace the src with a local asset.
+  -->
+  <main>
+    <section id="skills" class="section section-logos" aria-labelledby="skills-title">
+      <div class="container">
+        <h2 id="skills-title" class="section-title">Core Tools & Services</h2>
+        <p class="section-sub">Hover or focus a logo to reveal details — click to order.</p>
+
+        <!-- Logo grid -->
+        <div class="logos-grid" role="list">
+          <!-- Visual Studio Code -->
+          <div class="logo-card" role="listitem" tabindex="0"
+               data-title="VISUAL STUDIO CODE"
+               data-desc="Saya menguasai Visual Studio Code — workflow cepat, debugging, extension setup, dan produktivitas coding untuk web & script."
+               data-link="order.html?service=vscode">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg"
+                 alt="Logo Visual Studio Code" />
+          </div>
+
+          <!-- Servis Laptop -->
+          <div class="logo-card" role="listitem" tabindex="0"
+               data-title="SERVIS LAPTOP"
+               data-desc="Perbaikan hardware & software laptop: diagnose, komponen pengganti, soldering, dan tune-up performa."
+               data-link="order.html?service=servis-laptop">
+            <img src="https://cdn-icons-png.flaticon.com/512/2920/2920349.png" alt="Logo Servis Laptop" />
+          </div>
+
+          <!-- Arduino -->
+          <div class="logo-card" role="listitem" tabindex="0"
+               data-title="ARDUINO"
+               data-desc="Prototyping IoT & otomasi: sensor, actuator, komunikasi serial, dan integrasi ke dashboard."
+               data-link="order.html?service=arduino">
+            <img src="https://cdn.worldvectorlogo.com/logos/arduino-1.svg" alt="Logo Arduino" />
+          </div>
+
+          <!-- Blender -->
+          <div class="logo-card" role="listitem" tabindex="0"
+               data-title="BLENDER"
+               data-desc="Model 3D, sculpting, render, dan animasi dasar untuk presentasi produk atau visualisasi teknis."
+               data-link="order.html?service=blender">
+            <img src="https://download.blender.org/branding/blender_logo_socket.png" alt="Logo Blender" />
+          </div>
+
+          <!-- Database -->
+          <div class="logo-card" role="listitem" tabindex="0"
+               data-title="DATABASE (MySQL)"
+               data-desc="Desain & optimasi database: indexing, backup strategy, query tuning, dan integrasi aplikasi."
+               data-link="order.html?service=database">
+            <img src="https://cdn-icons-png.flaticon.com/512/4248/4248443.png" alt="Logo Database" />
+          </div>
+
+          <!-- CapCut -->
+          <div class="logo-card" role="listitem" tabindex="0"
+               data-title="CAPCUT"
+               data-desc="Editing video cepat dan menarik: trimming, color grade dasar, dan transisi untuk konten promosi."
+               data-link="order.html?service=capcut">
+            <img src="capcut.png" alt="Logo CapCut" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Spacer / extra content (so page has scroll) -->
+    <section id="gallery" class="section">
+      <div class="container">
+        <h3 class="section-title">Example Work & Gallery</h3>
+        <div class="gallery-grid">
+          <!-- Several placeholder images (Unsplash) -->
+          <figure class="gallery-item reveal">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop" alt="Example 1" />
+            <figcaption>Project: Repair & Optimization</figcaption>
+          </figure>
+          <figure class="gallery-item reveal">
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" alt="Example 2" />
+            <figcaption>Project: Website Landing</figcaption>
+          </figure>
+          <figure class="gallery-item reveal">
+            <img src="ardino.jpg" alt="Example 3" />
+            <figcaption>Project: Arduino Prototype</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    
+
+  <!-- Info box yang muncul saat hover/focus logo -->
+  <div id="infoBox" class="info-box" role="dialog" aria-hidden="true" aria-labelledby="infoTitle" aria-describedby="infoDesc">
+    <h3 id="infoTitle" class="info-title">TITLE</h3>
+    <p id="infoDesc" class="info-desc">Description</p>
+    <div class="info-actions">
+      <a id="infoOrder" class="info-order" href="order.html">Order Sekarang</a>
+      <button id="infoClose" class="info-close" aria-label="Tutup info">Close</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <small>© 2025 Ahmed. All Rights Reserved.</small>
+    </div>
+  </footer>
+
+  <!-- Script external -->
+  <script src="script.js" defer></script>
+</body>
+</html>
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+    const welcomeSound = new Audio('welcome.mp3');
+    welcomeSound.volume = 0; // mulai dari volume 0
+    welcomeSound.loop = false; // ga ngulang
+
+    const fadeIn = () => {
+        let vol = 0;
+        const fadeInterval = setInterval(() => {
+            if (vol < 1) {
+                vol += 0.05; // naik pelan pelan
+                welcomeSound.volume = vol;
+            } else {
+                clearInterval(fadeInterval);
+            }
+        }, 10); // tiap 0.1 detik naikin volume
+    };
+
+    // Coba autoplay
+    welcomeSound.play().then(() => {
+        fadeIn();
+    }).catch(() => {
+        console.log("Autoplay diblokir, tunggu interaksi user...");
+        document.addEventListener('click', () => {
+            welcomeSound.play();
+            fadeIn();
+        }, { once: true });
+    });
+});
+</script>
