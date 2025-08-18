@@ -193,33 +193,4 @@ aboutBtn.addEventListener('click', function(e) {
 </body>
 </html>
 
-<script>
-window.addEventListener('DOMContentLoaded', () => {
-    const welcomeSound = new Audio('welcome.mp3');
-    welcomeSound.volume = 0; // mulai dari volume 0
-    welcomeSound.loop = false; // ga ngulang
 
-    const fadeIn = () => {
-        let vol = 0;
-        const fadeInterval = setInterval(() => {
-            if (vol < 1) {
-                vol += 0.05; // naik pelan pelan
-                welcomeSound.volume = vol;
-            } else {
-                clearInterval(fadeInterval);
-            }
-        }, 10); // tiap 0.1 detik naikin volume
-    };
-
-    // Coba autoplay
-    welcomeSound.play().then(() => {
-        fadeIn();
-    }).catch(() => {
-        console.log("Autoplay diblokir, tunggu interaksi user...");
-        document.addEventListener('click', () => {
-            welcomeSound.play();
-            fadeIn();
-        }, { once: true });
-    });
-});
-</script>
