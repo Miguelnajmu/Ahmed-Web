@@ -468,7 +468,7 @@
       <aside class="profile-card reveal" id="profileCard">
         <div class="profile-meta">
           <img class="profile-avatar"
-               src="pfp.jpeg"
+               src="digicam.jpg"
                alt="Foto Profil Ahmed" />
           <div>
             <div class="profile-name">Ahmed Muzzaki El Nazmu</div>
@@ -902,31 +902,4 @@ document.getElementById("contactForm").addEventListener("submit", async function
 </body>
 </html>
 
-<!-- Teks asisten -->
-<div id="assistantText" style="font-size:1.2rem; margin-top:20px; color:#f1f5f9;"></div>
 
-<!-- Audio untuk suara asisten -->
-<audio id="assistantVoice" src="assistant.mp3"></audio>
-
-<script>
-const text = "I am Ahmed's assistant, here to help you find whatever you need.";
-let i = 0;
-const speed = 50; // kecepatan ketik (ms)
-
-function typeEffect() {
-    if (i < text.length) {
-        document.getElementById("assistantText").textContent += text.charAt(i);
-        i++;
-        setTimeout(typeEffect, speed);
-    }
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-    // Play audio pas user interaksi (biar lolos aturan autoplay)
-    document.body.addEventListener("click", () => {
-        document.getElementById("assistantVoice").play();
-    }, { once: true });
-
-    typeEffect();
-});
-</script>
